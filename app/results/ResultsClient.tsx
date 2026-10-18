@@ -29,16 +29,17 @@ function ResultsContent() {
       return;
     }
 
-    // Fetch session data directly from the debug endpoint (verified working)
-    fetch(`/api/debug/session?id=${sessionId}&t=${Date.now()}`, {
+    // Use the normal sessions API
+    fetch(`/api/sessions/${sessionId}?t=${Date.now()}`, {
       cache: "no-store",
     })
-      .then((r) => r.json())
+      .then((r) => {
+        if (!r.ok) throw new Error("Session not found");
+        return r.json();
+      })
       .then((d) => {
         console.log("=== RESULTS: session data ===", d);
-        if (d.error) {
-          setError(d.error);
-        } else if (d.session) {
+        if (d.session) {
           setFinalScore(d.session.final_score ?? 0);
           setCompletionTime(d.session.completion_time_seconds ?? null);
           setMissionsCompleted(d.session.missions_completed ?? 0);
@@ -81,8 +82,14 @@ function ResultsContent() {
 
   if (error) {
     return (
-      <div className="min-h-screen flex items-center justify-center text-red-400">
-        {error}
+      <div className="min-h-screen flex flex-col items-center justify-center text-red-400 gap-4">
+        <div>{error}</div>
+        <Link
+          href="/"
+          className="px-4 py-2 border border-pp-border rounded text-pp-light hover:border-pp-electric"
+        >
+          Return Home
+        </Link>
       </div>
     );
   }
