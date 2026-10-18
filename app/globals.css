@@ -1,0 +1,70 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+}
+
+body {
+  background-color: #050B18;
+  color: #F1F5F9;
+  font-family: ui-sans-serif, system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Network grid background */
+.bg-grid {
+  background-image:
+    linear-gradient(rgba(30, 58, 95, 0.25) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(30, 58, 95, 0.25) 1px, transparent 1px);
+  background-size: 50px 50px;
+  background-position: 0 0;
+}
+
+.bg-grid-animated {
+  background-image:
+    linear-gradient(rgba(30, 58, 95, 0.25) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(30, 58, 95, 0.25) 1px, transparent 1px);
+  background-size: 50px 50px;
+  animation: gridShift 20s linear infinite;
+}
+
+/* Glow */
+.glow-blue {
+  box-shadow: 0 0 24px rgba(56, 189, 248, 0.15);
+}
+
+.glow-strong {
+  box-shadow: 0 0 32px rgba(56, 189, 248, 0.4);
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: #0A1428; }
+::-webkit-scrollbar-thumb { background: #1E3A5F; border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: #2563EB; }
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+@keyframes gridShift {
+  0% { background-position: 0 0; }
+  100% { background-position: 50px 50px; }
+}
+
+@keyframes pulse-red {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4); }
+  50% { box-shadow: 0 0 0 8px rgba(239, 68, 68, 0); }
+}
+
+.timer-critical {
+  animation: pulse-red 1s ease-in-out infinite;
+}
